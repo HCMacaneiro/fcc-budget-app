@@ -6,13 +6,13 @@ class Category:
             ledger = []
             self.ledger = ledger
 
-    def deposit(self, amount, description = ""):
+    def deposit(self, amount, description=""):
         self.amount = amount
         self.description = description
         self.ledger.append({"amount": self.amount, "description": self.description})
         self.total += amount
 
-    def withdraw(self, withdraw_amount, withdraw_description = ""):
+    def withdraw(self, withdraw_amount, withdraw_description=""):
         if self.check_funds(withdraw_amount) == True:
             self.withdraw_amount = -withdraw_amount
             self.withdraw_description = withdraw_description
