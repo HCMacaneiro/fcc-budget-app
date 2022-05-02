@@ -18,6 +18,7 @@ class Category:
             self.withdraw_description = withdraw_description
             self.ledger.append({"amount": self.withdraw_amount, "description": withdraw_description})
             self.total -= withdraw_amount
+            return True
         else:
             return False
 
@@ -25,9 +26,13 @@ class Category:
         return self.total
 
     def transfer(self, transfer_amount, other_category):
-        self.transfer_amount = transfer_amount
-        self.withdraw(self.transfer_amount, f"Transfer to {other_category.name}")
-        other_category.deposit(self.transfer_amount, f"Transfer from {self.name}")
+        if self.check_funds(transfer_amount) == True:
+            self.transfer_amount = transfer_amount
+            self.withdraw(self.transfer_amount, f"Transfer to {other_category.name}")
+            other_category.deposit(self.transfer_amount, f"Transfer from {self.name}")
+            return True
+        else:
+            return False
 
     def check_funds(self, check_amount):
         self.check_amount = check_amount
