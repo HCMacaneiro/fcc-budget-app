@@ -1,50 +1,19 @@
-class Category:
-    total = 0
-    def __init__(self, name, ledger=None):
-        self.name = name
-        if ledger is None:
-            ledger = []
-            self.ledger = ledger
+import budget
+from budget import create_spend_chart
 
-    def deposit(self, amount, description=""):
-        self.amount = amount
-        self.description = description
-        self.ledger.append({"amount": self.amount, "description": self.description})
-        self.total += amount
+food = budget.Category("Food")
+food.deposit(1000, "initial deposit")
+food.withdraw(10.15, "groceries")
+food.withdraw(15.89, "restaurant and more food for dessert")
+print(food.get_balance())
+clothing = budget.Category("Clothing")
+food.transfer(50, clothing)
+clothing.withdraw(25.55)
+clothing.withdraw(100)
+auto = budget.Category("Auto")
+auto.deposit(1000, "initial deposit")
+auto.withdraw(15)
 
-    def withdraw(self, withdraw_amount, withdraw_description=""):
-        if self.check_funds(withdraw_amount) == True:
-            self.withdraw_amount = -withdraw_amount
-            self.withdraw_description = withdraw_description
-            self.ledger.append({"amount": self.withdraw_amount, "description": withdraw_description})
-            self.total -= withdraw_amount
-            return True
-        else:
-            return False
-
-    def get_balance(self):
-        return self.total
-
-    def transfer(self, transfer_amount, other_category):
-        if self.check_funds(transfer_amount) == True:
-            self.transfer_amount = transfer_amount
-            self.withdraw(self.transfer_amount, f"Transfer to {other_category.name}")
-            other_category.deposit(self.transfer_amount, f"Transfer from {self.name}")
-            return True
-        else:
-            return False
-
-    def check_funds(self, check_amount):
-        self.check_amount = check_amount
-        if self.check_amount > self.total:
-            return False
-        else:
-            return True
-
-    def __repr__(self):
-        return f"{self.ledger}"
-
-
-def create_spend_chart(categories):
-    pass
+print(food)
+print(clothing)
 
